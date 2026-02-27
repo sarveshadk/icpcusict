@@ -39,6 +39,7 @@ export default function RootLayout({
       <body
         className={`${jetbrainsMono.variable} antialiased`}
         style={{ fontFamily: "var(--font-mono), 'Fira Code', monospace" }}
+        suppressHydrationWarning
       >
         <ThemeProvider
           attribute="class"

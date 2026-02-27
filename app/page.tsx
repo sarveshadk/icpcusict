@@ -2,7 +2,30 @@
 
 import { useState, useEffect, useRef, useCallback } from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
+import SiteFooter from "@/components/site-footer";
 import { motion, AnimatePresence } from "framer-motion";
+import { Github, Linkedin, Twitter, Mail } from "lucide-react";
+
+/* ─────────────────── Team members data ─────────────────── */
+const TEAM_MEMBERS = [
+  {
+    name: "Azham Ul Haque",
+    position: "Lead",
+    email: "lead@icpcusict.com",
+    github: "https://github.com/azhamulhaque",
+    linkedin: "https://linkedin.com/in/azhamulhaque",
+    twitter: "https://twitter.com/azhamulhaque",
+  },
+  {
+    name: "Co-Lead Name",
+    position: "Co-Lead",
+    email: "colead@icpcusict.com",
+    github: "https://github.com/colead",
+    linkedin: "https://linkedin.com/in/colead",
+    twitter: "https://twitter.com/colead",
+  },
+];
 
 /* ─────────────────── Boot sequence lines ─────────────────── */
 const BOOT_LINES = [
@@ -464,6 +487,117 @@ export default function Home() {
           </div>
         </section>
 
+        {/* ── TEAM SECTION ── */}
+        <section className="py-24 px-6 border-t border-[#21262D]">
+          <div className="max-w-4xl mx-auto">
+            {/* Section header */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-100px" }}
+              transition={{ duration: 0.5 }}
+              className="mb-16"
+            >
+              <p className="text-sm text-[#8B949E] mb-2">
+                &gt; cat ./team 
+              </p>
+              <h2 className="text-2xl sm:text-3xl font-bold">
+                Our Team
+              </h2>
+              <div className="w-16 h-px bg-[#58A6FF] mt-4" />
+            </motion.div>
+
+            {/* Team cards grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {TEAM_MEMBERS.map((member, i) => (
+                <motion.div
+                  key={member.name}
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "-50px" }}
+                  transition={{ duration: 0.5, delay: i * 0.15 }}
+                  className="group relative"
+                >
+                  {/* Glow effect on hover */}
+                  <div className="absolute -inset-[1px] bg-gradient-to-r from-[#58A6FF]/0 via-[#58A6FF]/0 to-[#58A6FF]/0 group-hover:from-[#58A6FF]/20 group-hover:via-[#3FB950]/20 group-hover:to-[#58A6FF]/20 transition-all duration-700 blur-sm" />
+
+                  {/* Terminal card */}
+                  <div className="relative bg-[#0D1117] border border-[#30363D] group-hover:border-[#58A6FF]/40 transition-all duration-500">
+                    {/* Terminal header bar */}
+                    <div className="flex items-center gap-1.5 px-4 py-2.5 border-b border-[#30363D] bg-[#161B22]">
+                      <div className="w-2.5 h-2.5 rounded-full bg-[#F85149]" />
+                      <div className="w-2.5 h-2.5 rounded-full bg-[#FF9F1C]" />
+                      <div className="w-2.5 h-2.5 rounded-full bg-[#3FB950]" />
+                      <span className="ml-2 text-xs text-[#484F58]">
+                        ~/{member.position.toLowerCase().replace(" ", "-")}.sh
+                      </span>
+                    </div>
+
+                    {/* Terminal body */}
+                    <div className="p-5 space-y-4">
+                      {/* Name & Position */}
+                      <div>
+                        <div className="text-lg font-bold text-[#E6EDF3] tracking-tight">
+                          {member.name}
+                        </div>
+                        <span
+                          className={`text-xs font-medium ${
+                            member.position === "Lead"
+                              ? "text-[#FF9F1C]"
+                              : "text-[#58A6FF]"
+                          }`}
+                        >
+                          {member.position}
+                        </span>
+                      </div>
+
+                      {/* Email */}
+                      <a
+                        href={`mailto:${member.email}`}
+                        className="flex items-center gap-2 text-sm text-[#8B949E] hover:text-[#58A6FF] transition-colors"
+                      >
+                        <Mail className="w-3.5 h-3.5" />
+                        <span>{member.email}</span>
+                      </a>
+
+                      {/* Socials */}
+                      <div className="flex items-center gap-3 pt-1">
+                        <a
+                          href={member.github}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-[#484F58] hover:text-[#E6EDF3] transition-all duration-300 hover:scale-110"
+                          title="GitHub"
+                        >
+                          <Github className="w-4 h-4" />
+                        </a>
+                        <a
+                          href={member.linkedin}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-[#484F58] hover:text-[#0A66C2] transition-all duration-300 hover:scale-110"
+                          title="LinkedIn"
+                        >
+                          <Linkedin className="w-4 h-4" />
+                        </a>
+                        <a
+                          href={member.twitter}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-[#484F58] hover:text-[#1DA1F2] transition-all duration-300 hover:scale-110"
+                          title="Twitter"
+                        >
+                          <Twitter className="w-4 h-4" />
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </section>
+
         {/* ── CTA SECTION ── */}
         <section className="py-24 px-6">
           <div className="max-w-2xl mx-auto text-center">
@@ -509,18 +643,7 @@ export default function Home() {
         </section>
 
         {/* ── FOOTER ── */}
-        <footer className="py-8 px-6 border-t border-[#21262D]">
-          <div className="max-w-4xl mx-auto flex items-center justify-between">
-            <div className="text-xs text-[#484F58] font-mono">
-              © 2026 ICPC USICT. All rights reserved.
-            </div>
-            <div className="flex items-center gap-2 text-xs text-[#8B949E]">
-              <span className="inline-block w-2 h-2 rounded-full bg-[#3FB950] animate-pulse" />
-              <span>system.status: </span>
-              <span className="text-[#3FB950]">online</span>
-            </div>
-          </div>
-        </footer>
+        <SiteFooter />
       </motion.div>
 
       {/* ── CSS Animations ── */}

@@ -12,10 +12,19 @@ function CallbackContent() {
   useEffect(() => {
     const token = searchParams.get("token");
     const userId = searchParams.get("userId");
+    const email = searchParams.get("email") || "";
+    const role = searchParams.get("role") || "";
 
     if (token && userId) {
-      login({ id: userId, email: "", role: "STUDENT" }, token);
-      router.push(`/select-role?token=${token}&userId=${userId}`);
+      login({ id: userId, email, role: role || "STUDENT" }, token);
+
+      if (role) {
+        // Existing user with a role — go straight to dashboard
+        router.push("/dashboard");
+      } else {
+        // New user — needs to select a role
+        router.push(`/select-role?token=${token}&userId=${userId}`);
+      }
     } else {
       router.push("/login");
     }
